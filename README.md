@@ -1,2 +1,4 @@
-# Real-Time-Colour-Detection-System
-A real-time colour detection and analysis system using Python, Flask, OpenCV and NumPy, featuring dominant colour analysis, colour statistics and image capture.
+# Real-Time Colour Detection System
+    pip install -r requirements.txt
+    python app.py
+Open http://127.0.0.1:5000 and press **Start Camera**. Run it locally so Flask can reach your laptop webcam.

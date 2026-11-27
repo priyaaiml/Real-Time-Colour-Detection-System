@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Real-Time Colour Detection System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Real-Time Colour Detection System</h1>
+      <p class="subtitle">Point your webcam at an object and watch its colour get detected instantly.</p>
+    </header>
+
+    <section class="workspace">
+      <div class="card camera-card">
+        <div class="video-wrap">
+          <img id="video" alt="Live webcam feed" hidden>
+          <div id="placeholder" class="placeholder">
+            <div class="cam-icon">📷</div>
+            <p id="placeholderText">Camera is off. Press <strong>Start Camera</strong> to begin.</p>
+          </div>
+          <span id="liveBadge" class="live" hidden>● LIVE</span>
+        </div>
+
+        <div class="controls">
+          <button id="startBtn" class="btn primary">Start Camera</button>
+          <button id="stopBtn" class="btn danger" disabled>Stop Camera</button>
+          <button id="captureBtn" class="btn capture" disabled>Capture</button>
+        </div>
+
+        <div class="picker">
+          <span class="picker-label">Detect:</span>
+          <div class="chips" id="chips">
+            <button class="chip active" data-colour="all">All</button>
+            {% for c in colours %}
+            <button class="chip" data-colour="{{ c }}"><i class="dot dot-{{ c }}"></i>{{ c|capitalize }}</button>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <aside class="card info-card">
+        <h2>Selected Colour</h2>
+        <div id="preview" class="preview"><span id="previewText">No colour</span></div>
+        <dl class="values">
+          <div><dt>Name</dt><dd id="vName">—</dd></div>
+          <div><dt>HEX</dt><dd id="vHex">—</dd></div>
+          <div><dt>RGB</dt><dd id="vRgb">—</dd></div>
+          <div><dt>HSV</dt><dd id="vHsv">—</dd></div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="analysis">
+      <div class="card">
+        <h2>Dominant Colour</h2>
+        <div class="dominant">
+          <div id="domBox" class="dom-box"></div>
+          <div>
+            <div id="domName" class="dom-name">—</div>
+            <div id="domPercent" class="dom-percent">Covers — of the frame</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Detection Statistics <small id="statMode">(All colours)</small></h2>
+        <div id="stats" class="stats"><p class="empty">Start the camera to see counts.</p></div>
+      </div>
+    </section>
+
+    <section class="card capture-card" id="captureCard" hidden>
+      <h2>Captured Image</h2>
+      <img id="captureImg" alt="Captured detection frame">
+      <a id="downloadLink" class="btn primary" href="/captured.jpg?download=1">Download Image</a>
+    </section>
+
+    <section class="card detected-card">
+      <h2>Detected Colours</h2>
+      <div id="detected" class="detected"><p class="empty">Nothing detected yet.</p></div>
+    </section>
+  </main>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
